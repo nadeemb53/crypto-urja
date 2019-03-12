@@ -1,0 +1,20 @@
+/** Sample queries for Commodity Trading business network
+*/
+
+query getAllListing {
+  description: "Select all listing"
+  statement:
+      SELECT org.example.biznet.EnergyListing
+}
+
+query getUserEnergy {
+  description: "Select Energy of user"
+  statement:
+      SELECT org.example.biznet.Energy WHERE (owner.userId == _$inputOwner)
+}
+
+query getUserCoin {
+  description: "Select Coin of user"
+  statement:
+      SELECT org.example.biznet.Coins WHERE (owner.userId == _$inputOwner)
+}

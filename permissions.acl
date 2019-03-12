@@ -11,41 +11,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Sample access control list.
+ * Access Control List for the auction network.
  */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.example.biznet.SampleParticipant"
+
+rule User {
+    description: "Allow the member read access"
+    participant: "org.example.biznet.User"
     operation: READ
     resource: "org.example.biznet.*"
     action: ALLOW
 }
 
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.example.biznet.SampleParticipant"
-    operation: CREATE
-    resource: "org.example.biznet.SampleTransaction"
+rule EnergyOwner {
+    description: "Allow the owner of a energy total access"
+    participant(p): "org.example.biznet.User"
+    operation: ALL
+    resource(e): "org.example.biznet.Energy"
+    condition: (e.owner.getIdentifier() == p.getIdentifier())
     action: ALLOW
 }
 
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "org.example.biznet.SampleParticipant"
+rule CoinOwner {
+    description: "Allow the owner of coin total access"
+    participant(p): "org.example.biznet.User"
     operation: ALL
-    resource(r): "org.example.biznet.SampleAsset"
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
+    resource(c): "org.example.biznet.Coins"
+    condition: (e.owner.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule EnergyListingOwner {
+    description: "Allow the owner of energy total access to their listing"
+    participant(p): "org.example.biznet.User"
+    operation: ALL
+    resource(r): "org.example.biznet.EnergyListing"
+    condition: (r.energy.owner.getIdentifier() == p.getIdentifier())
     action: ALLOW
 }
 
 rule SystemACL {
-  description:  "System ACL to permit all access"
-  participant: "org.hyperledger.composer.system.Participant"
-  operation: ALL
-  resource: "org.hyperledger.composer.system.**"
-  action: ALLOW
+    description:  "System ACL to permit all access"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
 }
 
 rule NetworkAdminUser {

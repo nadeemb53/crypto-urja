@@ -1,0 +1,92 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+namespace org.example.biznet
+
+
+
+enum UserType {
+  o Resident
+  o Provider
+}
+
+participant User identified by userId {
+  o String userId
+  o String name
+  o Double lat
+  o Double long
+  o UserType type
+  o Double reputation
+ 
+}
+
+asset Coins identified by coinsID {
+    o String coinsID
+    o Double value
+    -->User owner
+}
+
+asset Energy identified by energyId {
+  o String energyId
+  o String units
+  o Double value
+  o Double produced
+  o Double sold
+  o Double used
+  --> User owner
+}
+
+enum ListingState {
+  o Available
+  o Sold
+}
+
+asset EnergyListing identified by energyListingId {
+  o String energyListingId
+  -->User owner
+  -->Coins coin
+  o Double lat
+  o Double long
+  o ListingState state
+  --> Energy energy 
+  o RequestEnergy[] requests optional
+}
+
+transaction ProduceEnergy {
+  -->User owner
+  -->Energy energy
+  o Double value
+}
+
+transaction UseEnergy {
+  -->User owner
+  --> Energy energy
+  o Double value
+}
+
+transaction RequestEnergy {
+    o Double requiredEnergy
+    -->User requester
+    -->Energy energy
+    -->Coins coin
+}
+
+transaction GiveEnergy {
+  -->EnergyListing listing
+  -->User owner
+}
