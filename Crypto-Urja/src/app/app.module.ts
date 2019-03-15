@@ -31,6 +31,9 @@ import { ProduceEnergyComponent } from './ProduceEnergy/ProduceEnergy.component'
 import { UseEnergyComponent } from './UseEnergy/UseEnergy.component';
 import { RequestEnergyComponent } from './RequestEnergy/RequestEnergy.component';
 import { GiveEnergyComponent } from './GiveEnergy/GiveEnergy.component';
+import { SoldEnergyComponent } from './sold-energy/sold-energy.component';
+import { ConsumeEnergyComponent } from './consume-energy/consume-energy.component';
+import { ProdEnergyComponent } from './prod-energy/prod-energy.component';
 
   @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { GiveEnergyComponent } from './GiveEnergy/GiveEnergy.component';
     ProduceEnergyComponent,
     UseEnergyComponent,
     RequestEnergyComponent,
-    GiveEnergyComponent
+    GiveEnergyComponent,
+    SoldEnergyComponent,
+    ConsumeEnergyComponent,
+    ProdEnergyComponent
   ],
   imports: [
     BrowserModule,
